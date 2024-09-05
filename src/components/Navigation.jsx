@@ -18,16 +18,16 @@ const Header = () => {
   }, []);
 
   return (
-    <header className={`fixed w-[95%] ml-4 z-50 transition-all rounded-xl duration-300 ${isScrolled ? 'bg-white shadow-md dark:bg-gray-900' : 'bg-transparent'}`}>
+    <header className={`fixed w-[95%] mx-10 mt-2 z-50 transition-all rounded-xl duration-300 ${isScrolled ? 'bg-white shadow-md dark:bg-gray-900' : 'bg-transparent'}`}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <a href="#home" className="flex items-center space-x-2">
-              <div className="flex space-x-1">
-                <div className="h-6 w-6 rounded-full bg-red-600 dark:bg-red-400"></div>
-                <div className="h-8 w-2 bg-gray-900 dark:bg-white"></div>
+              <div className="relative w-8 h-8">
+                <div className="absolute inset-0 bg-red-600 dark:bg-red-400 rounded-full transform -rotate-45"></div>
+                <div className="absolute top-1/2 left-1/2 w-4 h-4 bg-white dark:bg-gray-900 rounded-sm transform -translate-x-1/2 -translate-y-1/2 rotate-45"></div>
               </div>
-              <span className="text-2xl font-bold text-gray-900 dark:text-white">S2F</span>
+              <span className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">S2F</span>
             </a>
           </div>
 

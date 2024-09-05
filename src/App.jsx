@@ -8,7 +8,7 @@ import Home from "./components/Home";
 export default function App() {
   return (
     <Router>
-      <div className="flex flex-col p-4 min-h-screen bg-[#142341] relative">
+      <div className="flex flex-col min-h-screen bg-[#142341] relative">
         <Navigation />
         <main className="flex-grow">
           <Routes>

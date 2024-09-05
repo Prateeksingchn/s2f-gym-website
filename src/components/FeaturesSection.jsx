@@ -55,7 +55,7 @@ const FeatureCard = ({ imgSrc, title, description, linkText, isLastCard = false 
 
   return (
     <div className={isLastCard ? lastCardClasses : baseClasses}>
-      <div className={`relative space-y-8 py-12 p-8 ${isLastCard ? 'transition duration-300 group-hover:bg-white dark:group-hover:bg-gray-800' : ''}`}>
+      <div className={`relative space-y-8 py-12  p-8 ${isLastCard ? 'transition duration-300 group-hover:bg-white dark:group-hover:bg-gray-800' : ''}`}>
         <img
           src={imgSrc}
           className="w-12"
