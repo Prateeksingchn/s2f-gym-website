@@ -1,37 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Dumbbell, Users, Zap } from 'lucide-react';
-import '../App.css';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const HeroSection = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const images = [
+    "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1470&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=1470&auto=format&fit=crop",
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen flex items-center overflow-hidden" id="home">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
-      </div>
+    <div className="relative bg-gray-900 text-white min-h-screen flex items-center overflow-hidden" id="home">
+      <AnimatePresence>
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0"
+        >
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${images[currentSlide]})` }}
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-60" />
+        </motion.div>
+      </AnimatePresence>
       
       <div className="container mx-auto px-4 py-16 relative z-10">
-        <div className="max-w-4xl mx-auto text-center py-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto text-center py-20"
+        >
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6">
-            Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">Singh's Fitness Farm</span>
+            Welcome to{' '}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
+              Singh's Fitness Farm
+            </span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-12">
             Embark on a journey of fitness and wellness. Our state-of-the-art facilities, expert trainers, and supportive community are here to help you achieve your health goals and unlock your full potential.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-            <a
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href="#"
-              className="btn btn-primary"
+              className="px-8 py-3 bg-orange-500 text-white rounded-full font-semibold transition-all duration-300 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
             >
               Start Your Fitness Journey
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </a>
-            <a
+              <ArrowRight className="inline-block w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href="#"
-              className="btn btn-secondary"
+              className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-full font-semibold transition-all duration-300 hover:bg-white hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
             >
               Explore Our Programs
-            </a>
+            </motion.a>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
@@ -51,7 +89,7 @@ const HeroSection = () => {
               description="Motivating environment for all fitness levels"
             />
           </div>
-        </div>
+        </motion.div>
       </div>
       
       <EquipmentCarousel />
@@ -60,34 +98,78 @@ const HeroSection = () => {
 };
 
 const FeatureCard = ({ icon, title, description }) => (
-  <div className="bg-gray-800/50 p-6 rounded-lg backdrop-blur-sm">
+  <motion.div 
+    whileHover={{ scale: 1.05 }}
+    className="bg-gray-800 bg-opacity-50 p-6 rounded-lg backdrop-blur-sm transition-all duration-300 hover:shadow-lg"
+  >
     <div className="text-orange-400 mb-4">{icon}</div>
     <h3 className="text-xl font-semibold mb-2">{title}</h3>
     <p className="text-gray-400">{description}</p>
-  </div>
+  </motion.div>
 );
 
-const EquipmentCarousel = () => (
-  <div className="absolute bottom-0 left-0 right-0 py-8 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent">
-    <div className="flex animate-carousel">
-      {[...Array(2)].map((_, index) => (
-        <React.Fragment key={index}>
-          <CarouselItem src="https://plus.unsplash.com/premium_photo-1661920538067-c48451160c72?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dHJlYWRtaWxsfGVufDB8MHwwfHx8MA%3D%3D" alt="Treadmill" />
-          <CarouselItem src="https://plus.unsplash.com/premium_photo-1670505062610-b9041ebe603c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d2VpZ2h0c3xlbnwwfDB8MHx8fDA%3D" alt="Free Weights" />
-          <CarouselItem src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3ltJTIwZ3JvdXB8ZW58MHwwfDB8fHww" alt="Yoga Mat" />
-          <CarouselItem src="https://images.unsplash.com/photo-1652363723082-b1fdca4bdbd2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Z3ltJTIwY3ljbGluZ3xlbnwwfDB8MHx8fDA%3D" alt="Cycling Machine" />
-          <CarouselItem src="https://images.unsplash.com/photo-1534368270820-9de3d8053204?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fGd5bSUyMHNxdWF0fGVufDB8MHwwfHx8MA%3D%3D" alt="Kettlebell" />
-          <CarouselItem src="https://plus.unsplash.com/premium_photo-1661963295739-fb37c0b3a616?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Z3ltJTIwcm93aW5nfGVufDB8MHwwfHx8MA%3D%3D" alt="Rowing Machine" />
-        </React.Fragment>
-      ))}
+const EquipmentCarousel = () => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const carouselRef = useRef(null);
+  const requestRef = useRef(null);
+
+  const carouselItems = [
+    { src: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&auto=format&fit=crop&q=60", alt: "Treadmill" },
+    { src: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=500&auto=format&fit=crop&q=60", alt: "Free Weights" },
+    { src: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&auto=format&fit=crop&q=60", alt: "Yoga Mat" },
+    { src: "https://images.unsplash.com/photo-1652363723082-b1fdca4bdbd2?w=500&auto=format&fit=crop&q=60", alt: "Cycling Machine" },
+    { src: "https://images.unsplash.com/photo-1534368270820-9de3d8053204?w=500&auto=format&fit=crop&q=60", alt: "Kettlebell" },
+    { src: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=500&auto=format&fit=crop&q=60", alt: "Rowing Machine" },
+  ];
+
+  const moveCarousel = () => {
+    setScrollPosition((prevPosition) => {
+      const newPosition = (prevPosition + 0.5) % 100;
+      return newPosition;
+    });
+    requestRef.current = requestAnimationFrame(moveCarousel);
+  };
+
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(moveCarousel);
+    return () => cancelAnimationFrame(requestRef.current);
+  }, []);
+
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (carouselRef.current) {
+        const delta = e.deltaY * 0.5;
+        setScrollPosition((prevPosition) => {
+          const newPosition = (prevPosition + delta / 10) % 100;
+          return newPosition < 0 ? newPosition + 100 : newPosition;
+        });
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, []);
+
+  const doubledItems = [...carouselItems, ...carouselItems];
+
+  return (
+    <div className="absolute bottom-0 left-0 right-0 py-8 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent overflow-hidden">
+      <div 
+        ref={carouselRef}
+        className="flex transition-transform duration-100 ease-linear"
+        style={{ 
+          transform: `translateX(-${scrollPosition}%)`,
+          width: `${doubledItems.length * 200}px`,
+        }}
+      >
+        {doubledItems.map((item, index) => (
+          <div key={index} className="w-48 flex-shrink-0 mx-2">
+            <img src={item.src} alt={item.alt} className="w-full h-32 object-cover rounded-lg shadow-md" />
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
-
-const CarouselItem = ({ src, alt }) => (
-  <div className="w-48 flex-shrink-0 mx-2">
-    <img src={src} alt={alt} className="w-full h-32 object-cover rounded-lg" />
-  </div>
-);
+  );
+};
 
 export default HeroSection;
