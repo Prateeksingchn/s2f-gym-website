@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Dumbbell, Users, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -19,6 +19,23 @@ const HeroSection = () => {
 
   return (
     <div className="relative bg-gray-900 text-white min-h-screen flex items-center overflow-hidden" id="home">
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-marquee {
+          animation: marquee 30s linear infinite;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+      
       <AnimatePresence>
         <motion.div
           key={currentSlide}
@@ -92,7 +109,7 @@ const HeroSection = () => {
         </motion.div>
       </div>
       
-      <EquipmentCarousel />
+      <MarqueeCarousel />
     </div>
   );
 };
@@ -108,11 +125,7 @@ const FeatureCard = ({ icon, title, description }) => (
   </motion.div>
 );
 
-const EquipmentCarousel = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const carouselRef = useRef(null);
-  const requestRef = useRef(null);
-
+const MarqueeCarousel = () => {
   const carouselItems = [
     { src: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&auto=format&fit=crop&q=60", alt: "Treadmill" },
     { src: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=500&auto=format&fit=crop&q=60", alt: "Free Weights" },
@@ -122,51 +135,25 @@ const EquipmentCarousel = () => {
     { src: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=500&auto=format&fit=crop&q=60", alt: "Rowing Machine" },
   ];
 
-  const moveCarousel = () => {
-    setScrollPosition((prevPosition) => {
-      const newPosition = (prevPosition + 0.5) % 100;
-      return newPosition;
-    });
-    requestRef.current = requestAnimationFrame(moveCarousel);
-  };
-
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(moveCarousel);
-    return () => cancelAnimationFrame(requestRef.current);
-  }, []);
-
-  useEffect(() => {
-    const handleWheel = (e) => {
-      if (carouselRef.current) {
-        const delta = e.deltaY * 0.5;
-        setScrollPosition((prevPosition) => {
-          const newPosition = (prevPosition + delta / 10) % 100;
-          return newPosition < 0 ? newPosition + 100 : newPosition;
-        });
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: true });
-    return () => window.removeEventListener('wheel', handleWheel);
-  }, []);
-
   const doubledItems = [...carouselItems, ...carouselItems];
 
   return (
     <div className="absolute bottom-0 left-0 right-0 py-8 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent overflow-hidden">
-      <div 
-        ref={carouselRef}
-        className="flex transition-transform duration-100 ease-linear"
-        style={{ 
-          transform: `translateX(-${scrollPosition}%)`,
-          width: `${doubledItems.length * 200}px`,
-        }}
-      >
-        {doubledItems.map((item, index) => (
-          <div key={index} className="w-48 flex-shrink-0 mx-2">
-            <img src={item.src} alt={item.alt} className="w-full h-32 object-cover rounded-lg shadow-md" />
-          </div>
-        ))}
+      <div className="flex">
+        <div className="flex animate-marquee">
+          {doubledItems.map((item, index) => (
+            <div key={index} className="w-48 flex-shrink-0 mx-2">
+              <img src={item.src} alt={item.alt} className="w-full h-32 object-cover rounded-lg shadow-md" />
+            </div>
+          ))}
+        </div>
+        <div className="flex animate-marquee">
+          {doubledItems.map((item, index) => (
+            <div key={`duplicate-${index}`} className="w-48 flex-shrink-0 mx-2">
+              <img src={item.src} alt={item.alt} className="w-full h-32 object-cover rounded-lg shadow-md" />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
