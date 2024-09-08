@@ -1,58 +1,162 @@
-import React from 'react';
-// import Container from "./Container";
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Users, MapPin, Settings, RefreshCw, GraduationCap, BarChart } from 'lucide-react';
 
 const HighlightsSection = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const contentRef = useRef(null);
+  const itemRefs = useRef([]);
+
+  const content = [
+    {
+      title: "Transform Your Life at S2F",
+      description: "Experience a holistic approach to fitness that goes beyond physical exercise.",
+      image: "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=600",
+      features: [
+        { icon: Users, title: "Community Support", description: "Join a supportive community on your fitness journey." },
+        { icon: MapPin, title: "Convenient Location", description: "Easy access with ample parking." },
+      ],
+    },
+    {
+      title: "State-of-the-Art Equipment",
+      description: "Push your limits with our cutting-edge fitness equipment.",
+      image: "https://images.pexels.com/photos/414029/pexels-photo-414029.jpeg?auto=compress&cs=tinysrgb&w=600",
+      features: [
+        { icon: Settings, title: "Latest Technology", description: "Advanced fitness tech for optimal performance." },
+        { icon: RefreshCw, title: "Regular Maintenance", description: "Ensuring safety and best experience." },
+      ],
+    },
+    {
+      title: "Expert Personal Trainers",
+      description: "Our certified trainers are dedicated to your success.",
+      image: "https://images.unsplash.com/photo-1606902965551-dce093cda6e7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODN8fGZpdG5lc3N8ZW58MHx8MHx8fDA%3D",
+      features: [
+        { icon: GraduationCap, title: "Certified Professionals", description: "Experienced in various fitness disciplines." },
+        { icon: BarChart, title: "Personalized Plans", description: "Custom fitness plans for your goals." },
+      ],
+    },
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = contentRef.current.scrollTop;
+      const itemHeight = contentRef.current.scrollHeight / content.length;
+      const newIndex = Math.round(scrollPosition / itemHeight);
+      
+      if (newIndex !== activeIndex) {
+        setActiveIndex(newIndex);
+      }
+    };
+
+    contentRef.current.addEventListener('scroll', handleScroll);
+    return () => contentRef.current?.removeEventListener('scroll', handleScroll);
+  }, [activeIndex]);
+
+  const scrollToSection = (index) => {
+    contentRef.current.scrollTo({
+      top: index * (contentRef.current.scrollHeight / content.length),
+      behavior: 'smooth'
+    });
+  };
+
   return (
-    <div id="highlights" className="px-32">
-      <div>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-sky-500">
-          <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clipRule="evenodd" />
-        </svg>
-        
-        <div className="space-y-6 justify-between text-gray-600 md:flex flex-row-reverse md:gap-6 md:space-y-0 lg:gap-12 lg:items-center">
-          <div className="md:5/12 lg:w-1/2">
-            <img
-              src="https://images.unsplash.com/photo-1542766788-a2f588f447ee?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGd5bSUyMGludGVyaW9yfGVufDB8MHwwfHx8MA%3D%3D"
-              alt="S2F Gym Interior"
-              loading="lazy"
-              width="600"
-              height="400"
-              className="w-full"
-            />
-          </div>
-          <div className="md:7/12 lg:w-1/2">
-            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
-              Transform Your Life at Singh's Fitness Farm (S2F)
-            </h2>
-            <p className="my-8 text-gray-600 dark:text-gray-300">
-              At S2F, we believe in a holistic approach to fitness that goes beyond just physical exercise. Our state-of-the-art facilities, expert trainers, and supportive community create an environment where you can achieve your fitness goals and improve your overall well-being. <br /> <br /> Whether you're a beginner or an experienced athlete, S2F offers personalized programs and a wide range of activities to keep you motivated and challenged on your fitness journey.
-            </p>
-            <div className="divide-y space-y-4 divide-gray-100 dark:divide-gray-800">
-              <div className="mt-8 flex gap-4 md:items-center">
-                <div className="w-12 h-12 flex gap-4 rounded-full bg-indigo-100 dark:bg-indigo-900/20">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 m-auto text-indigo-500 dark:text-indigo-400">
-                    <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-1.01.75.75 0 00.42-.643 4.875 4.875 0 00-6.957-4.611 8.586 8.586 0 011.71 5.157v.003z" />
-                  </svg>        
-                </div>
-                <div className="w-5/6">
-                  <h4 className="font-semibold text-lg text-gray-700 dark:text-indigo-300">Community Support</h4>
-                  <p className="text-gray-500 dark:text-gray-400">Join a supportive community of like-minded individuals on their fitness journey.</p>
-                </div> 
-              </div> 
-              <div className="pt-4 flex gap-4 md:items-center">
-                <div className="w-12 h-12 flex gap-4 rounded-full bg-teal-100 dark:bg-teal-900/20">  
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 m-auto text-teal-600 dark:text-teal-400">
-                    <path fillRule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-                  </svg>                                      
-                </div>
-                <div className="w-5/6">
-                  <h4 className="font-semibold text-lg text-gray-700 dark:text-teal-300">Convenient Location</h4>
-                  <p className="text-gray-500 dark:text-gray-400">Easy to access with ample parking, making your fitness routine hassle-free.</p>
-                </div> 
-              </div> 
+    <div className="flex h-[90vh] overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      
+
+      {/* Scrollable content section - adjusted width */}
+      <div 
+        ref={contentRef} 
+        className="w-1/2 overflow-y-scroll px-24 py-16 snap-y snap-mandatory scrollbar-hide"
+      >
+        {content.map((item, index) => (
+          <motion.div
+            key={index}
+            ref={el => itemRefs.current[index] = el}
+            className="min-h-screen flex items-center snap-start"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <div className="max-w-lg">
+              <motion.h2 
+                className="text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500"
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              >
+                {item.title}
+              </motion.h2>
+              <motion.p 
+                className="text-lg text-gray-300 mb-8 leading-relaxed"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              >
+                {item.description}
+              </motion.p>
+              <div className="space-y-8">
+                {item.features.map((feature, featureIndex) => (
+                  <motion.div 
+                    key={featureIndex} 
+                    className="flex items-start"
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 + featureIndex * 0.2, ease: "easeOut" }}
+                  >
+                    <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${
+                      featureIndex === 0 ? 'bg-blue-500' : 'bg-purple-500'
+                    }`}>
+                      <feature.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="ml-4">
+                      <h4 className="text-xl font-semibold text-white mb-1">
+                        {feature.title}
+                      </h4>
+                      <p className="text-sm text-gray-400">{feature.description}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-          </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Vertical navigation line and dots */}
+      <div className="fixed top-1/2 left-8 transform -translate-y-1/2 flex flex-col items-center z-1">
+        <div className="h-64 w-px bg-gray-600 relative">
+          {content.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => scrollToSection(index)}
+              className={`absolute w-3 h-3 rounded-full transition-all duration-300 -left-1 ${
+                index === activeIndex ? 'bg-white scale-150' : 'bg-gray-500 hover:bg-gray-300'
+              }`}
+              style={{ top: `${(index / (content.length - 1)) * 100}%` }}
+            />
+          ))}
         </div>
+      </div>
+
+      {/* Fixed image section - adjusted width and added overlay */}
+      <div className="w-1/2  bg-gray-800 relative overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            className="absolute inset-0 flex items-center justify-center"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-70" />
+            <img
+              src={content[activeIndex].image}
+              alt={content[activeIndex].title}
+              className="w-[500px] h-[500px] object-cover object-center rounded-2xl"
+            />
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

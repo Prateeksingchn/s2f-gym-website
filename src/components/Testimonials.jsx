@@ -37,6 +37,12 @@ const testimonials = [
     role: "Data Analyst",
     avatar: "/api/placeholder/100/100",
     content: "The supportive environment at Singh's Fitness Farm is unmatched. I feel empowered and inspired every time I step through the doors!"
+  },
+  {
+    name: "Rajesh Kumar",
+    role: "Entrepreneur",
+    avatar: "/api/placeholder/100/100",
+    content: "Singh's Fitness Farm has been a game-changer for me. The trainers are knowledgeable and the community is incredibly supportive. I've never felt more motivated to achieve my fitness goals!"
   }
 ];
 
@@ -61,7 +67,7 @@ const TestimonialCard = ({ name, role, avatar, content, bgColor, textColor, grid
 
 const Testimonials = () => {
   return (
-    <section className="bg-gray-50 py-20" id="testimonials">
+    <section className="bg-gray-50 py-20 z-10" id="testimonials">
       <div className="container mx-auto px-4">
         <h2 className="text-5xl font-extrabold text-center mb-12 text-gray-800">
           Transforming Lives
@@ -69,12 +75,13 @@ const Testimonials = () => {
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[minmax(150px,auto)]">
-          <TestimonialCard {...testimonials[0]} gridArea="1 / 1 / 3 / 3" />
-          <TestimonialCard {...testimonials[1]} gridArea="1 / 3 / 2 / 5" />
+          <TestimonialCard {...testimonials[0]} gridArea="1 / 1 / 3 / 2" />
+          <TestimonialCard {...testimonials[1]} gridArea="1 / 3 / 2 / 5 " />
           <TestimonialCard {...testimonials[2]} gridArea="2 / 3 / 3 / 4" />
           <TestimonialCard {...testimonials[3]} gridArea="2 / 4 / 4 / 5" />
           <TestimonialCard {...testimonials[4]} gridArea="3 / 1 / 4 / 3" />
           <TestimonialCard {...testimonials[5]} gridArea="3 / 3 / 4 / 4" />
+          <TestimonialCard {...testimonials[5]} gridArea="3 / 2 / 4 / 5" />
         </div>
         
         <div className="mt-12 text-center">
