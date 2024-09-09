@@ -4,8 +4,8 @@ import { Users, MapPin, Settings, RefreshCw, GraduationCap, BarChart } from 'luc
 
 const HighlightsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
   const contentRef = useRef(null);
-  const itemRefs = useRef([]);
 
   const content = [
     {
@@ -50,7 +50,7 @@ const HighlightsSection = () => {
 
     contentRef.current.addEventListener('scroll', handleScroll);
     return () => contentRef.current?.removeEventListener('scroll', handleScroll);
-  }, [activeIndex]);
+  }, [activeIndex, content.length]);
 
   const scrollToSection = (index) => {
     contentRef.current.scrollTo({
@@ -60,26 +60,51 @@ const HighlightsSection = () => {
   };
 
   return (
-    <div className="flex h-[90vh] overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-      
+    <div className="flex flex-col lg:flex-row h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 text-white ">
+      {/* Vertical navigation line and dots */}
+      <div 
+        className="w-full lg:w-24 h-16 lg:h-auto flex items-center justify-center relative"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        <div className="h-1 lg:h-1/2 w-1/2 lg:w-px bg-gray-600 absolute left-1/2 transform -translate-x-1/2">
+          <motion.div
+            className="absolute top-0 left-0 h-full w-full bg-white"
+            initial={{ scaleX: 0, scaleY: 0 }}
+            animate={{ 
+              scaleX: activeIndex / (content.length - 1),
+              scaleY: activeIndex / (content.length - 1)
+            }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          />
+          {content.map((_, index) => (
+            <motion.button
+              key={index}
+              onClick={() => scrollToSection(index)}
+              className={`absolute w-3 h-3 rounded-full transition-all duration-300 -left-1.5 ${
+                index === activeIndex ? 'bg-white scale-150' : 'bg-gray-500 hover:bg-gray-300'
+              }`}
+              style={{ 
+                top: `${(index / (content.length - 1)) * 100}%`
+              }}
+              whileHover={{ scale: 1.5 }}
+              animate={isHovering ? { y: [0, 5, 0] } : {}}
+              transition={{ duration: 0.5, repeat: isHovering ? Infinity : 0 }}
+            />
+          ))}
+        </div>
+      </div>
 
-      {/* Scrollable content section - adjusted width */}
+      {/* Content section */}
       <div 
         ref={contentRef} 
-        className="w-1/2 overflow-y-scroll px-24 py-16 snap-y snap-mandatory scrollbar-hide"
+        className="flex-1 overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
       >
         {content.map((item, index) => (
-          <motion.div
-            key={index}
-            ref={el => itemRefs.current[index] = el}
-            className="min-h-screen flex items-center snap-start"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="max-w-lg">
+          <div key={index} className="h-[650px] sm:h-[700px] md:h-[750px] lg:h-[800px] flex flex-col lg:flex-row items-center justify-between snap-start p-8 lg:p-12">
+            <div className="w-full lg:w-1/2 xl:w-3/5 mb-8 lg:mb-0">
               <motion.h2 
-                className="text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500"
+                className="text-4xl lg:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500"
                 initial={{ opacity: 0, y: -30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
@@ -87,14 +112,14 @@ const HighlightsSection = () => {
                 {item.title}
               </motion.h2>
               <motion.p 
-                className="text-lg text-gray-300 mb-8 leading-relaxed"
+                className="text-lg lg:text-xl text-gray-300 mb-8 leading-relaxed"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
               >
                 {item.description}
               </motion.p>
-              <div className="space-y-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {item.features.map((feature, featureIndex) => (
                   <motion.div 
                     key={featureIndex} 
@@ -109,7 +134,7 @@ const HighlightsSection = () => {
                       <feature.icon className="w-6 h-6 text-white" />
                     </div>
                     <div className="ml-4">
-                      <h4 className="text-xl font-semibold text-white mb-1">
+                      <h4 className="text-lg font-semibold text-white mb-1">
                         {feature.title}
                       </h4>
                       <p className="text-sm text-gray-400">{feature.description}</p>
@@ -118,45 +143,29 @@ const HighlightsSection = () => {
                 ))}
               </div>
             </div>
-          </motion.div>
+
+            {/* Image section */}
+            <div className="w-full sm:w-2/3 lg:w-1/2 xl:w-2/5 h-64 sm:h-80 lg:h-96 relative overflow-hidden rounded-2xl shadow-lg">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  className="absolute inset-0"
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.1 }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60" />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
         ))}
-      </div>
-
-      {/* Vertical navigation line and dots */}
-      <div className="fixed top-1/2 left-8 transform -translate-y-1/2 flex flex-col items-center z-1">
-        <div className="h-64 w-px bg-gray-600 relative">
-          {content.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => scrollToSection(index)}
-              className={`absolute w-3 h-3 rounded-full transition-all duration-300 -left-1 ${
-                index === activeIndex ? 'bg-white scale-150' : 'bg-gray-500 hover:bg-gray-300'
-              }`}
-              style={{ top: `${(index / (content.length - 1)) * 100}%` }}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Fixed image section - adjusted width and added overlay */}
-      <div className="w-1/2  bg-gray-800 relative overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            className="absolute inset-0 flex items-center justify-center"
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-70" />
-            <img
-              src={content[activeIndex].image}
-              alt={content[activeIndex].title}
-              className="w-[500px] h-[500px] object-cover object-center rounded-2xl"
-            />
-          </motion.div>
-        </AnimatePresence>
       </div>
     </div>
   );
