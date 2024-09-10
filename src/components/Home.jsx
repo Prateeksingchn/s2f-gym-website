@@ -19,10 +19,7 @@ const Home = () => {
         <Testimonials />
         <CallToAction />
         <Blog />
-        <section>
-          <h2>Our Location</h2>
-          <Map />
-        </section>
+        <Map />
       </main>
     </div>
   );

@@ -1,85 +1,49 @@
 import React from "react";
-// import Container from "./Container";
 
 const App = () => {
   return (
-    <div className="relative py-16">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 h-max w-full m-auto grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
-      >
-        <div className="blur-[106px] h-56 bg-gradient-to-br from-orange-400 to-red-600 dark:from-blue-700"></div>
-        <div className="blur-[106px] h-32 bg-gradient-to-r from-yellow-400 to-green-300 dark:to-indigo-600"></div>
-      </div>
-      <div>
-        <div className="relative">
-          <div className="flex items-center justify-center -space-x-2">
-            <img
-              loading="lazy"
-              width="400"
-              height="400"
-              src="/images/avatars/avatar.webp"
-              alt="S2F member photo"
-              className="h-8 w-8 rounded-full object-cover"
-            />
-            <img
-              loading="lazy"
-              width="200"
-              height="200"
-              src="/images/avatars/avatar-1.webp"
-              alt="S2F member photo"
-              className="h-12 w-12 rounded-full object-cover"
-            />
-            <img
-              loading="lazy"
-              width="200"
-              height="200"
-              src="/images/avatars/avatar-2.webp"
-              alt="S2F member photo"
-              className="z-10 h-16 w-16 rounded-full object-cover"
-            />
-            <img
-              loading="lazy"
-              width="200"
-              height="200"
-              src="/images/avatars/avatar-3.webp"
-              alt="S2F member photo"
-              className="relative h-12 w-12 rounded-full object-cover"
-            />
-            <img
-              loading="lazy"
-              width="200"
-              height="200"
-              src="/images/avatars/avatar-4.webp"
-              alt="S2F member photo"
-              className="h-8 w-8 rounded-full object-cover"
-            />
+    <div className="relative py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-8">
+            Transform Your Life at <br />
+            <span className="text-orange-500 whitespace-nowrap">Singh's Fitness Farm</span>
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-12">
+            Join our growing community of fitness enthusiasts who are achieving their goals with <span className="whitespace-nowrap">Singh's Fitness Farm</span>. Start your journey today!
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <a
+              href="#"
+              className="px-8 py-3 text-lg font-semibold text-white bg-orange-500 rounded-full hover:bg-orange-600 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Start Your Transformation
+            </a>
+            <a
+              href="#"
+              className="px-8 py-3 text-lg font-semibold text-orange-500 bg-white border-2 border-orange-500 rounded-full hover:bg-orange-50 transition duration-300 ease-in-out transform hover:scale-105 dark:bg-gray-800 dark:text-orange-400 dark:border-orange-400 dark:hover:bg-gray-700"
+            >
+              View Success Stories
+            </a>
           </div>
-          <div className="mt-6 m-auto space-y-6 md:w-8/12 lg:w-7/12">
-            <h1 className="text-center text-4xl font-bold text-gray-800 dark:text-white md:text-5xl">
-              Transform Your Life at S2F
-            </h1>
-            <p className="text-center text-xl text-gray-600 dark:text-gray-300">
-              Join thousands of satisfied members who have achieved their fitness goals with Singh's Fitness Farm. Start your journey today!
-            </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              <a
-                href="#"
-                className="relative flex h-12 w-full items-center justify-center px-8 before:absolute before:inset-0 before:rounded-full before:bg-orange-400 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-              >
-                <span className="relative text-base font-semibold text-white dark:text-dark">
-                  Start Your Transformation
-                </span>
-              </a>
-              <a
-                href="#"
-                className="relative flex h-12 w-full items-center justify-center px-8 before:absolute before:inset-0 before:rounded-full before:border before:border-transparent before:bg-orange-400/10 before:bg-gradient-to-b before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 dark:before:border-gray-700 dark:before:bg-gray-800 sm:w-max"
-              >
-                <span className="relative text-base font-semibold text-orange-400 dark:text-white">
-                  View Success Stories
-                </span>
-              </a>
+          <div className="flex flex-col items-center">
+            <div className="flex -space-x-4 mb-4">
+              {[
+                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces&auto=format&q=80",
+                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces&auto=format&q=80",
+                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces&auto=format&q=80",
+              ].map((src, index) => (
+                <img
+                  key={index}
+                  src={src}
+                  alt={`S2F member ${index + 1}`}
+                  className="w-16 h-16 rounded-full border-4 border-white dark:border-gray-800 object-cover shadow-lg"
+                />
+              ))}
             </div>
+            <p className="text-gray-600 dark:text-gray-300">
+              Join 100+ members already transforming their lives
+            </p>
           </div>
         </div>
       </div>
