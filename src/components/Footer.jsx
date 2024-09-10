@@ -13,7 +13,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="py-20 md:py-40">
+    <footer className="py-20 md:py-40 bg-[#151515]">
       <Container>
         <div className="m-auto md:w-10/12 lg:w-8/12 xl:w-6/12">
           <div className="flex flex-wrap items-center justify-between md:flex-nowrap">

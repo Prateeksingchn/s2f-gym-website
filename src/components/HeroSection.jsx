@@ -62,6 +62,7 @@ const HeroSection = () => {
         >
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6">
             Welcome to{' '}
+            <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600">
               Singh's Fitness Farm
             </span>

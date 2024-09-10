@@ -18,18 +18,19 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed w-full z-[2000] transition-all duration-300 ${
+      className={`fixed w-full px-10 z-[2000] transition-all duration-300 ${
         isScrolled ? "py-2" : "py-4"
       }`}
     >
       <div
-        className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
+        className={`mx-auto max-w-7xl px-2 sm:px-4 lg:px-8 transition-all duration-300 ${
           isScrolled
             ? "bg-white/40 shadow-lg backdrop-blur-md"
             : "bg-transparent"
         } rounded-full`}
       >
         <nav className="flex items-center justify-between h-16">
+          {/* Logo */}
           <motion.div
             className="flex-shrink-0"
             initial={{ opacity: 0, x: -20 }}
@@ -37,7 +38,7 @@ const Header = () => {
             transition={{ duration: 0.5 }}
           >
             <a href="#home" className="flex items-center space-x-2 group">
-              <div className="relative w-10 h-10">
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transform rotate-45 transition-all duration-300 group-hover:rotate-[225deg]"></div>
                 <div
                   className={`absolute inset-0 flex items-center justify-center ${
@@ -48,7 +49,7 @@ const Header = () => {
                 </div>
               </div>
               <span
-                className={`text-2xl font-extrabold ${
+                className={`text-xl sm:text-2xl font-extrabold ${
                   isScrolled ? "text-gray-800" : "text-white"
                 } tracking-tight transition-colors duration-300`}
               >
@@ -57,7 +58,8 @@ const Header = () => {
             </a>
           </motion.div>
 
-          <div className="hidden lg:block">
+          {/* Desktop Navigation */}
+          <div className="hidden md:block">
             <motion.div
               className="flex items-center space-x-1"
               initial={{ opacity: 0, y: -20 }}
@@ -68,7 +70,7 @@ const Header = () => {
                 <motion.a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+                  className={`px-2 sm:px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
                     isScrolled
                       ? "text-gray-700 hover:text-purple-600"
                       : "text-gray-200 hover:text-white"
@@ -82,15 +84,16 @@ const Header = () => {
             </motion.div>
           </div>
 
+          {/* Join Now Button (Desktop) */}
           <motion.div
-            className="hidden lg:block"
+            className="hidden md:block"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <motion.a
               href="#"
-              className={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full ${
+              className={`inline-flex items-center px-3 sm:px-4 py-2 border border-transparent text-sm font-medium rounded-full ${
                 isScrolled
                   ? "text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
                   : "text-purple-600 bg-white hover:bg-gray-100"
@@ -102,10 +105,11 @@ const Header = () => {
             </motion.a>
           </motion.div>
 
-          <div className="lg:hidden">
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
             <motion.button
               onClick={toggleNav}
-              className={`inline-flex items-center justify-center p-2 rounded-md ${
+              className={`inline-flex items-center justify-center p-1 sm:p-2 rounded-md ${
                 isScrolled
                   ? "text-gray-400 hover:text-gray-500 hover:bg-gray-100"
                   : "text-gray-200 hover:text-white hover:bg-white/10"
@@ -115,16 +119,17 @@ const Header = () => {
               whileTap={{ scale: 0.9 }}
             >
               <span className="sr-only">Toggle menu</span>
-              {navOpen ? <X size={24} /> : <Menu size={24} />}
+              {navOpen ? <X size={20} /> : <Menu size={20} />}
             </motion.button>
           </div>
         </nav>
       </div>
 
+      {/* Mobile Navigation Menu */}
       <AnimatePresence>
         {navOpen && (
           <motion.div
-            className="lg:hidden"
+            className="md:hidden"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -135,7 +140,7 @@ const Header = () => {
                 isScrolled
                   ? "bg-white/90 backdrop-blur-md"
                   : "bg-gray-900/90 backdrop-blur-md"
-              } mt-2 rounded-2xl mx-4`}
+              } mt-2 rounded-2xl mx-2 sm:mx-4`}
             >
               {navItems.map((item) => (
                 <motion.a
@@ -152,9 +157,10 @@ const Header = () => {
                   {item}
                 </motion.a>
               ))}
+              {/* Join Now Button (Mobile) */}
               <motion.a
                 href="#"
-                className={`block w-full px-4 py-2 text-center font-medium rounded-md ${
+                className={`block w-full px-3 py-2 text-center font-medium rounded-md ${
                   isScrolled
                     ? "text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
                     : "text-purple-600 bg-white hover:bg-gray-100"

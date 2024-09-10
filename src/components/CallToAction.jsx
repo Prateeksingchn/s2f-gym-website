@@ -5,9 +5,9 @@ const App = () => {
     <div className="relative py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-8">
+          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-8">
             Transform Your Life at <br />
-            <span className="text-orange-500 whitespace-nowrap">Singh's Fitness Farm</span>
+            <span className="text-orange-500 whitespace-wrap sm:whitespace-nowrap">Singh's Fitness Farm</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-12">
             Join our growing community of fitness enthusiasts who are achieving their goals with <span className="whitespace-nowrap">Singh's Fitness Farm</span>. Start your journey today!

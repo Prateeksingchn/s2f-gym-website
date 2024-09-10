@@ -8,7 +8,7 @@ import Home from "./components/Home";
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen w-full">
+      <div className="min-h-screen w-full bg-[#151515]">
         <Navigation />
         <main className="flex-grow">
           <Routes>
