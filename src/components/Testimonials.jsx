@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 
@@ -34,7 +34,8 @@ const testimonials = [
   },
   {
     type: 'slogan',
-    content: 'Cultivating Strength, Harvesting Health'
+    content: 'Cultivating Strength, Harvesting Health',
+    video: '/slogan.mp4'
   },
   {
     type: 'testimonial',
@@ -107,6 +108,21 @@ const getBentoGridStyle = (index) => {
 };
 
 const GridItem = ({ item }) => {
+  const videoRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  };
+
   switch (item.type) {
     case 'testimonial':
       return (
@@ -129,7 +145,7 @@ const GridItem = ({ item }) => {
               ))}
             </motion.div>
             <motion.p 
-              className="font-medium mb-2 sm:mb-3 md:mb-4 text-gray-600 text-[17px] sm:text-xl md:text-base line-clamp-3 group-hover:line-clamp-none transition-all duration-300"
+              className="font-medium mb-2 sm:mb-3 md:mb-4 text-gray-600 text-[17px] sm:text-xl md:text-base line-clamp-4 group-hover:line-clamp-none transition-all duration-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
@@ -161,8 +177,24 @@ const GridItem = ({ item }) => {
       );
     case 'slogan':
       return (
-        <motion.div className="bg-green-500 p-3 rounded-lg shadow-md flex items-center justify-center h-full sm:p-4 sm:rounded-3xl sm:shadow-lg md:p-6">
-          <h3 className="text-white text-4xl font-bold text-center sm:text-base md:text-lg lg:text-xl">{item.content}</h3>
+        <motion.div 
+          className="bg-green-500 p-3 rounded-lg shadow-md flex items-center justify-center h-full sm:p-4 sm:rounded-3xl sm:shadow-lg md:p-6 overflow-hidden relative group"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <h3 className="text-white text-4xl font-bold text-center sm:text-base md:text-lg lg:text-xl z-10 group-hover:opacity-0 transition-opacity duration-300">
+            {item.content}
+          </h3>
+          <video 
+            ref={videoRef}
+            src={item.video} 
+            className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
+            loop 
+            muted 
+            playsInline
+          />
         </motion.div>
       );
     default:

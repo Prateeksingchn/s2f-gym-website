@@ -25,7 +25,7 @@ const Header = () => {
       <div
         className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/90 shadow-lg backdrop-blur-md"
+            ? "bg-white/40 shadow-lg backdrop-blur-md"
             : "bg-transparent"
         } rounded-full`}
       >
