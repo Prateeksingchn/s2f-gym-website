@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const testimonials = [
   {
@@ -9,7 +12,8 @@ const testimonials = [
     role: "Mobile Developer",
     avatar: "/api/placeholder/100/100",
     content: "Joining Singh's Fitness Farm has transformed my life! The supportive community and expert trainers have helped me achieve my fitness goals beyond what I thought possible.",
-    rating: 5
+    rating: 5,
+    className: "bg-blue-100 text-blue-800"
   },
   {
     type: 'testimonial',
@@ -17,12 +21,8 @@ const testimonials = [
     role: "Marketing Specialist",
     avatar: "/api/placeholder/100/100",
     content: "The atmosphere at S2F is incredible! The trainers are knowledgeable and always encouraging. I've never felt more motivated to work out!",
-    rating: 5
-  },
-  {
-    type: 'image',
-    src: 'https://plus.unsplash.com/premium_photo-1676243407463-468804b9ecaf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bG9nb3xlbnwwfDB8MHx8fDA%3D',
-    alt: 'Fitness Farm Logo on Building'
+    rating: 5,
+    className: "bg-green-100 text-green-800"
   },
   {
     type: 'testimonial',
@@ -30,12 +30,23 @@ const testimonials = [
     role: "Software Engineer",
     avatar: "/api/placeholder/100/100",
     content: "S2F is more than just a gym; it's a community. I've made lifelong friends and improved my health tremendously. Highly recommend!",
-    rating: 4
+    rating: 4,
+    className: "bg-gray-200 "
+  },
+  {
+    type: 'testimonial',
+    name: "Ravi Kumar",
+    role: "Software Engineer",
+    avatar: "/api/placeholder/100/100",
+    content: "S2F is more than just a gym; it's a community. I've made lifelong friends and improved my health tremendously. Highly recommend!",
+    rating: 4,
+    className: "bg-purple-100 text-purple-800"
   },
   {
     type: 'slogan',
     content: 'Cultivating Strength, Harvesting Health',
-    video: '/slogan.mp4'
+    video: '/slogan.mp4',
+    className: "bg-yellow-100 hidden md:block lg:block xl:block text-yellow-800"
   },
   {
     type: 'testimonial',
@@ -43,7 +54,8 @@ const testimonials = [
     role: "UX Designer",
     avatar: "/api/placeholder/100/100",
     content: "Singh's Fitness Farm keeps me motivated with its diverse class options. The friendly community and dedicated trainers create an amazing workout environment.",
-    rating: 5
+    rating: 5,
+    className: "bg-red-100 text-red-800"
   },
   {
     type: 'testimonial',
@@ -51,12 +63,15 @@ const testimonials = [
     role: "Project Manager",
     avatar: "/api/placeholder/100/100",
     content: "I've seen amazing results since joining S2F. The trainers are always there to guide you, and the community keeps you accountable.",
-    rating: 5
+    rating: 5,
+    className: "bg-indigo-100 text-indigo-800"
   },
   {
     type: 'billboard',
-    src: 'https://images.unsplash.com/flagged/photo-1556746834-cbb4a38ee593?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTV8fGJpbGxib2FyZCUyMGZpdG5lc3N8ZW58MHwwfDB8fHww',
-    alt: 'Fitness Farm Billboard'
+    src: './running-img2.webp',
+    alt: 'Fitness Farm Billboard',
+    video: '/running.mp4', // Add the path to your video file
+    className: "bg-pink-200 hidden md:block lg:block xl:block"
   },
   {
     type: 'testimonial',
@@ -64,19 +79,22 @@ const testimonials = [
     role: "Data Analyst",
     avatar: "/api/placeholder/100/100",
     content: "The supportive environment at Singh's Fitness Farm is unmatched. I feel empowered and inspired every time I step through the doors!",
-    rating: 4
+    rating: 4,
+    className: "bg-teal-100 text-teal-800"
   },
   {
     type: 'product',
     src: 'https://images.unsplash.com/photo-1576678927484-cc907957088c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fGJpbGxib2FyZCUyMGZpdG5lc3N8ZW58MHwxfDB8fHww',
-    alt: 'Fitness Farm Water Bottle'
+    alt: 'Fitness Farm Water Bottle',
+    video: '/water-bottle.mp4',
+    className: "bg-orange-200 hidden md:block lg:block xl:block"
   }
 ];
 
 const getBentoGridStyle = (index) => {
   const baseStyle = "col-span-1";
   
-  // Styles for sm and larger devices (unchanged)
+  // Styles for sm and larger devices
   const smStyle = index === 0 || index === 7 ? "sm:col-span-2" : "";
 
   // Styles for md devices (3-column grid)
@@ -112,7 +130,7 @@ const GridItem = ({ item }) => {
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
-      videoRef.current.play();
+      videoRef.current.play().catch(error => console.error("Error playing video:", error));
     }
   };
 
@@ -127,7 +145,7 @@ const GridItem = ({ item }) => {
     case 'testimonial':
       return (
         <motion.div 
-          className="bg-white h-[300px] sm:h-[400px] md:h-full lg:h-full p-3 rounded-lg shadow-md flex flex-col justify-between overflow-hidden group  sm:p-4 sm:rounded-3xl sm:shadow-lg md:p-6"
+          className={`h-[300px] sm:h-[400px] md:h-full lg:h-full p-3 rounded-lg shadow-md flex flex-col justify-between overflow-hidden group sm:p-4 sm:rounded-3xl sm:shadow-lg md:p-6 ${item.className}`}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -145,7 +163,7 @@ const GridItem = ({ item }) => {
               ))}
             </motion.div>
             <motion.p 
-              className="font-medium mb-2 sm:mb-3 md:mb-4 text-gray-600 text-[17px] sm:text-xl md:text-base line-clamp-4 group-hover:line-clamp-none transition-all duration-300"
+              className="font-medium mb-2 sm:mb-3 md:mb-4 text-[17px] sm:text-xl md:text-base line-clamp-4 group-hover:line-clamp-none transition-all duration-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
@@ -161,7 +179,7 @@ const GridItem = ({ item }) => {
           >
             <img src={item.avatar} alt={item.name} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full mr-2 sm:mr-3" />
             <div>
-              <h3 className="font-bold text-gray-800 text-xs sm:text-sm md:text-base">{item.name}</h3>
+              <h3 className="font-bold text-xs sm:text-sm md:text-base">{item.name}</h3>
               <p className="text-xxs sm:text-xs md:text-sm text-gray-500">{item.role}</p>
             </div>
           </motion.div>
@@ -171,20 +189,39 @@ const GridItem = ({ item }) => {
     case 'billboard':
     case 'product':
       return (
-        <motion.div className="h-[300px] sm:h-[400px] md:h-full lg:h-full rounded-lg overflow-hidden shadow-md sm:rounded-3xl sm:shadow-lg">
-          <img src={item.src} alt={item.alt} className="w-full h-full object-cover" />
+        <motion.div 
+          className={`h-[300px] sm:h-[400px] md:h-full lg:h-full rounded-lg overflow-hidden shadow-md sm:rounded-3xl sm:shadow-lg ${item.className} relative group`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <img 
+            src={item.src} 
+            alt={item.alt} 
+            className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-0" 
+          />
+          {item.video && (
+            <video 
+              ref={videoRef}
+              src={item.video} 
+              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
+              loop 
+              muted 
+              playsInline
+              preload="auto"
+            />
+          )}
         </motion.div>
       );
     case 'slogan':
       return (
         <motion.div 
-          className="bg-green-500 p-3 rounded-lg shadow-md flex items-center justify-center h-full sm:p-4 sm:rounded-3xl sm:shadow-lg md:p-6 overflow-hidden relative group"
+          className={`p-3 rounded-lg shadow-md flex items-center justify-center h-full sm:p-4 sm:rounded-3xl sm:shadow-lg md:p-6 overflow-hidden relative group ${item.className}`}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <h3 className="text-white text-4xl font-bold text-center sm:text-base md:text-lg lg:text-xl z-10 group-hover:opacity-0 transition-opacity duration-300">
+          <h3 className="text-4xl font-bold text-center mt-24 sm:text-base md:text-lg lg:text-5xl z-10 group-hover:opacity-0 transition-opacity duration-300">
             {item.content}
           </h3>
           <video 
@@ -202,12 +239,54 @@ const GridItem = ({ item }) => {
   }
 };
 
+const CarouselItem = ({ item }) => {
+  return (
+    <div className="px-4 py-6">
+      <GridItem item={item} />
+    </div>
+  );
+};
+
+const PrevArrow = ({ onClick }) => (
+  <button
+    className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white bg-opacity-50 hover:bg-opacity-100 rounded-full p-2 transition-all duration-300"
+    onClick={onClick}
+  >
+    <ChevronLeft size={24} />
+  </button>
+);
+
+const NextArrow = ({ onClick }) => (
+  <button
+    className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white bg-opacity-50 hover:bg-opacity-100 rounded-full p-2 transition-all duration-300"
+    onClick={onClick}
+  >
+    <ChevronRight size={24} />
+  </button>
+);
+
 const TestimonialsBentoGrid = () => {
+  const visibleTestimonials = testimonials.filter(item => 
+    !item.className || !item.className.includes('hidden')
+  );
+
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
+  };
+
   return (
     <section className="bg-gray-100 py-6 sm:py-8 md:py-12 lg:py-20">
       <div className="container mx-auto px-3 sm:px-4">
         <motion.h2 
-          className="text-xl font-extrabold text-center mb-4 text-gray-800 sm:text-3xl sm:mb-6 md:text-4xl md:mb-8 lg:text-5xl lg:mb-12"
+          className="text-[1.7rem] font-extrabold text-center mb-4 text-gray-800 sm:text-3xl sm:mb-6 md:text-4xl md:mb-8 lg:text-5xl lg:mb-12"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -215,16 +294,26 @@ const TestimonialsBentoGrid = () => {
           What Our Members Say
         </motion.h2>
         
-        <div className="grid grid-cols-1 gap-3 auto-rows-fr sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-6 lg:gap-6">
+        {/* Carousel for sm and smaller screens */}
+        <div className="md:hidden lg:hidden xl:hidden">
+          <Slider {...sliderSettings}>
+            {visibleTestimonials.map((item, index) => (
+              <CarouselItem key={index} item={item} />
+            ))}
+          </Slider>
+        </div>
+        
+        {/* Bento grid for md and larger screens */}
+        <div className="hidden md:grid grid-cols-3 gap-5 lg:grid-cols-6 lg:gap-6">
           {testimonials.map((item, index) => (
             <div key={index} className={getBentoGridStyle(index)}>
               <GridItem item={item} />
             </div>
           ))}
         </div>
-        
+
         <motion.div 
-          className="mt-6 sm:mt-8 md:mt-12 lg:mt-16 text-center"
+          className="mt-8 sm:mt-8 md:mt-12 lg:mt-16 text-center"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
