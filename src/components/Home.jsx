@@ -9,6 +9,7 @@ const Testimonials = lazy(() => import("./Testimonials"));
 const CallToAction = lazy(() => import("./CallToAction"));
 const Blog = lazy(() => import("./Blog"));
 const Map = lazy(() => import("./Map"));
+const Trainers = lazy(() => import("./Trainers"));
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +39,7 @@ const Home = () => {
           <HeroSection />
           <Features />
           <GymImageGallery />
+          <Trainers />
           <Testimonials />
           <CallToAction />
           <Blog />

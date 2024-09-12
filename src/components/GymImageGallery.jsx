@@ -92,7 +92,7 @@ const GymImageGallery = () => {
   };
 
   return (
-    <div className="min-h-[820px] sm:min-h-[870px] md:min-h-screen lg:min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 px-0 pb-0">
+    <div className="min-h-[840px] sm:min-h-[870px] md:min-h-screen lg:min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 px-0 pb-0">
       <div className="relative flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 lg:px-16 xl:px-20 py-8 sm:py-12 md:py-16 lg:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-800 opacity-90"></div>
         

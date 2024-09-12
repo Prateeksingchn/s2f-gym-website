@@ -86,7 +86,7 @@ const testimonials = [
     type: 'product',
     src: 'https://images.unsplash.com/photo-1576678927484-cc907957088c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fGJpbGxib2FyZCUyMGZpdG5lc3N8ZW58MHwxfDB8fHww',
     alt: 'Fitness Farm Water Bottle',
-    video: '/water-bottle.mp4',
+    video: '/dumbell.mp4',
     className: "bg-orange-200 hidden md:block lg:block xl:block"
   }
 ];
@@ -249,7 +249,7 @@ const CarouselItem = ({ item }) => {
 
 const PrevArrow = ({ onClick }) => (
   <button
-    className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white bg-opacity-50 hover:bg-opacity-100 rounded-full p-2 transition-all duration-300"
+    className="absolute right-20 bottom-3 -translate-y-1/2 z-10 bg-white bg-opacity-50 hover:bg-opacity-100 rounded-full p-2 transition-all duration-300"
     onClick={onClick}
   >
     <ChevronLeft size={24} />
@@ -258,7 +258,7 @@ const PrevArrow = ({ onClick }) => (
 
 const NextArrow = ({ onClick }) => (
   <button
-    className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white bg-opacity-50 hover:bg-opacity-100 rounded-full p-2 transition-all duration-300"
+    className="absolute right-6 bottom-3 -translate-y-1/2 z-10 bg-white bg-opacity-50 hover:bg-opacity-100 rounded-full p-2 transition-all duration-300"
     onClick={onClick}
   >
     <ChevronRight size={24} />
@@ -313,14 +313,14 @@ const TestimonialsBentoGrid = () => {
         </div>
 
         <motion.div 
-          className="mt-8 sm:mt-8 md:mt-12 lg:mt-16 text-center"
+          className="mt-8 sm:mt-8 md:mt-12 lg:mt-16 text-center flex justify-center items-center"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
           <motion.a
             href="#join-now"
-            className="inline-block bg-green-500 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8 lg:py-4 lg:px-10 rounded-full text-xs sm:text-sm md:text-base lg:text-lg hover:bg-green-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="w-[300px] hidden md:block lg:block xl:block bg-green-500 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8 lg:py-4 lg:px-10 rounded-full text-xs sm:text-sm md:text-base lg:text-lg hover:bg-green-600 transition-all duration-300 shadow-lg hover:shadow-xl"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
